@@ -1,0 +1,9 @@
+.myNavbar {
+	background-color: #d4c6a7;
+}
+
+.icon>img:hover {
+	background-color:#b59f6e;
+	border-radius: 20%;
+	transition: 0.2s linear;
+}
