@@ -5,13 +5,17 @@ import bcrypt from 'bcrypt';
 
 const generateJWT = (id, email, role) => {
     const { sign } = jwt;
-    return sign({ id, email, role}, process.env.SECRET_KEY, {expiresIn: '24h'});
+    return sign({ id, email, role}, process.env.SECRET_KEY, {expiresIn: '48h'});
 }
 
 
 class UserController {
     async registration(req, res, next) {
-        const { email, password, role } = req.body;
+        const { email, password } = req.body;
+        let { role } = req.body;
+        if (!role) {
+            role = 'USER';
+        }
         if (!email || !password ) {
             return next(ApiError.badRequest('Некорректный email или пароль'));
         }

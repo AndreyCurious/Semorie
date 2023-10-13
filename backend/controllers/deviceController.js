@@ -11,7 +11,7 @@ class DeviceController {
     async create(req, res, next) {
         try {
             let {name, price, brandId, typeId, info} = req.body
-            const {img} = req.files
+            const {img} = req.files;
             let fileName = v4() + ".jpg"
             img.mv(path.resolve(__dirname, '..', 'static', fileName))
             const device = await models.Device.create({name, price, brandId, typeId, img: fileName});
@@ -56,7 +56,7 @@ class DeviceController {
     }
 
     async getOne(req, res) {
-        const {id} = req.params
+        const {id} = req.params;
         const device = await models.Device.findOne(
             {
                 where: {id},
@@ -66,13 +66,25 @@ class DeviceController {
         return res.json(device)
     }
     async delete(req, res) {
-		const { id } = req.body;
+		const { id } = req.headers;
 		await models.Device.destroy({
 			where: {id},
 		});
 		const devices = await models.Device.findAll();
 		return res.json(devices);
 	}
+
+    async updateRating(req, res) {
+        const {id, rating} = req.body;
+        const device = await models.Device.findOne({where: {id}});
+        await models.Device.update(
+            {rating: (Number(rating) + device.rating) / countRating},
+            {
+                where: {id}
+            }
+        )
+        return res.json(device);
+    }
 }
 
 export default new DeviceController();

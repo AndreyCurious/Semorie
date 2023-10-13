@@ -1,3 +1,5 @@
+import jwt, { decode } from 'jsonwebtoken';
+
 export default function (role) {
 	return function (req, res, next) {
 		const { verify } =  jwt;
@@ -9,14 +11,14 @@ export default function (role) {
 			if (!token) {
 				res.status(401).json({ message: 'Не авторизован' })
 			}
-			const decoded = verify(token, process.env.SECRET_KEY);
-			if (decoded.rile !== role) {
-				return res.status(403).json({ message: 'Нет доступа' })
+			const decoded = decode(token);
+			if (decoded.role !== role) {
+				return res.status(403).json({ message: decoded })
 			}
 			req.user = decoded;
 			next();
 		} catch (e) {
-			res.status(401).json({ message: 'Не авторизован' });
+			res.status(401).json({ message: 'aaa'});
 		}
 	}
 }
