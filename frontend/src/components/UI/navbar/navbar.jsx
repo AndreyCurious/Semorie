@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Navbar, Container, Button } from 'react-bootstrap';
 import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,6 @@ const MyNavbar = () => {
   const auth = useAuth();
   const { t } = useTranslation();
   const decodeUser = JSON.parse(localStorage.getItem('user'));
-  const user = localStorage.getItem('isUser');
 
 	return (
 		<Navbar className={classes.myNavbar}>

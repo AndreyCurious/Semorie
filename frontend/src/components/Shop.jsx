@@ -33,6 +33,7 @@ const Shop = () => {
       return item.brandId === currentGroup && item.typeId === currentType;
     })
   );
+/* eslint-disable */
   useEffect(() => {    
     const getData = async () => {
       try {
